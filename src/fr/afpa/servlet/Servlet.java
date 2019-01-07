@@ -34,14 +34,16 @@ public class Servlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String login = request.getParameter("login");
 		String mdp = request.getParameter("mdp");
-		String message = request.getParameter("message");
 		boolean valid =ser.readId(login, mdp);
 		RequestDispatcher dispatcher;
-		if(valid) {
+		if(valid==true) {
 			dispatcher = request.getRequestDispatcher("mail.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+		if(valid==false) {
+			dispatcher = request.getRequestDispatcher("newPersonne.jsp");
+			dispatcher.forward(request, response);
+		}
 
 	}
 	/**

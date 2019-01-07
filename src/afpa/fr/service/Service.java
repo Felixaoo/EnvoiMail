@@ -1,8 +1,10 @@
 package afpa.fr.service;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.*;
@@ -25,28 +27,33 @@ import javax.mail.internet.MimeMultipart;
 public class Service {
 
 	public boolean readId(String login, String mdp) throws IOException {
-		boolean valid =true;
+		boolean valid =false;
 		FileReader fr= new FileReader("c:\\ENV\\connexion.txt");
 		BufferedReader br = new BufferedReader(fr);
 		while(br.ready()) {
-			String[]tab = br.readLine().split(":");
-			if("login".equals(tab[0])) {
-				if(!login.equals(tab[1])) {
-					valid = false;
+			String[]tab = br.readLine().split(";");
+			if("login".equals(tab[0])&& login.equals(tab[1])) {
+					valid = true;
 
-				}
 
 			}
-			else if ("mdp".equals(tab[0])) {
-				if (!mdp.equals(tab[1])) {
-					valid=false;
-				}
+			else if ("mdp".equals(tab[0]) && mdp.equals(tab[1])) {
+					valid=true;
+				
 			}
 
 		}
 		br.close();
 		return valid;
 
+	}
+	
+	public void ecrireFichier(String login, String mdp, String nom, String prenom, String tel, String mail) throws IOException {
+		FileWriter fw = new FileWriter("c:\\ENV\\clients.txt", true);
+		BufferedWriter bw = new BufferedWriter (fw);
+		bw.write(login+";"+mdp+";"+nom+";"+prenom+";"+tel+";"+mail);
+		bw.newLine();
+		bw.close();
 	}
 	
 	public void sendMail(String adresse, String objet, String body) throws Throwable, Exception {

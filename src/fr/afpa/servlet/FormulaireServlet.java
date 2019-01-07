@@ -1,11 +1,15 @@
 package fr.afpa.servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import afpa.fr.service.Service;
 
 /**
  * Servlet implementation class FormulaireServlet
@@ -27,7 +31,20 @@ public class FormulaireServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Service ser = new Service();
+		String login = request.getParameter("login");
+		String mdp = request.getParameter("pass");
+		String nom = request.getParameter("nom");
+		String prenom= request.getParameter("prenom");
+		String tel = request.getParameter("tel");
+		String mail = request.getParameter("email");
+		
+		ser.ecrireFichier(login, mdp, nom, prenom, tel, mail);
+		RequestDispatcher dispatcher;
+			dispatcher = request.getRequestDispatcher("personneCree.jsp");
+			dispatcher.forward(request, response);
+			
+		
 	}
 
 	/**

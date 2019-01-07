@@ -1,2 +1,2 @@
-login:felix
-mdp:bonjour
+login;felix
+mdp;bonjour
